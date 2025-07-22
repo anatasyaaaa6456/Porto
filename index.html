@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>R.zox - Phantom Hacker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&family=Noto+Sans+JP&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css "/>
+    <script src="https://kit.fontawesome.com/a076d05399.js " crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        html, body {
+            font-family: 'Share Tech Mono', monospace;
+            background: #000;
+            color: #0f0;
+            line-height: 1.8;
+            overflow-x: hidden;
+            cursor: none;
+            height: 100%;
+        }
+
+        /* Terminal Background Grid */
+        .terminal-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(255, 0, 255, 0.1) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 0, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.1;
+            animation: terminalScroll 20s linear infinite;
+        }
+
+        @keyframes terminalScroll {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 40px; }
+        }
+
+        /* Matrix Rain */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.2;
+        }
+
+        .matrix-column {
+            position: absolute;
+            color: #0f0;
+            font-family: monospace;
+            font-size: 18px;
+            text-shadow: 0 0 5px #0f0;
+        }
+
+        /* Glitch Effect */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .glitch {
+            position: relative;
+            animation: glitch 2s infinite;
+            color: #0f0;
+            text-shadow: 
+                2px 0 5px #ff00ff,
+                -2px 0 5px #00ffff;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #000;
+            clip: rect(0, 900px, 0, 0);
+        }
+
+        .glitch::before {
+            clip: rect(31px, 9999px, 9px, 0);
+            color: #ff00ff;
+        }
+
+        .glitch::after {
+            clip: rect(6px, 9999px, 88px, 0);
+            color: #00ffff;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 25px;
+            height: 25px;
+            border: 2px solid #ff00ff;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: all 0.1s ease, width 0.3s ease, height 0.3s ease;
+            mix-blend-mode: difference;
+            box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; }
+            50% { box-shadow: 0 0 15px #ff00ff, 0 0 25px #ff00ff; }
+            100% { box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; }
+        }
+
+        .cursor.hack {
+            width: 40px;
+            height: 40px;
+            border-color: #00ffff;
+            box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
+            animation: hackPulse 1s infinite;
+        }
+
+        @keyframes hackPulse {
+            0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff; }
+            50% { transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 25px #00ffff, 0 0 40px #00ffff; }
+            100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff; }
+        }
+
+        /* Scan Line */
+        .scan-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 255, 0, 0.5);
+            box-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+            z-index: 9997;
+            animation: scan 5s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            margin: 80px 0 40px;
+            color: #0f0;
+            position: relative;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        }
+
+        /* Profile Card */
+        .profile-card {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto;
+            overflow: hidden;
+            border: 3px solid #0f0;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .profile-details {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .profile-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: #0f0;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        .kanji-title {
+            text-align: center;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 2rem;
+            color: #00ffff;
+            margin: 10px 0 30px;
+            font-weight: 600;
+        }
+
+        .alias {
+            font-size: 1.5rem;
+            color: #ff00ff;
+            margin-bottom: 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px dashed rgba(255, 0, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            background: rgba(255, 0, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .info-label {
+            color: #ff00ff;
+            font-weight: bold;
+            min-width: 120px;
+        }
+
+        .info-value {
+            color: #0f0;
+            text-align: right;
+            flex: 1;
+        }
+
+        .profile-bio {
+            font-size: 1.1rem;
+            color: #0f0;
+            line-height: 1.8;
+            text-align: justify;
+            margin-top: 30px;
+            border-left: 3px solid #00ffff;
+            padding-left: 15px;
+        }
+
+        .bio-highlight {
+            color: #ff00ff;
+            font-weight: bold;
+        }
+
+        .bio-accent {
+            color: #00ffff;
+            font-style: italic;
+        }
+
+        .timeline {
+            max-width: 1000px;
+            margin: 60px auto;
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #00ffff, transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 30px 0;
+            padding: 20px 40px;
+            background: rgba(20, 0, 20, 0.8);
+            border-left: 3px solid #ff00ff;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease;
+        }
+
+        .timeline-item.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: -40px;
+            width: 20px;
+            height: 20px;
+            background: #ff00ff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        .timeline-item h4 {
+            margin: 0 0 10px;
+            color: #00ffff;
+        }
+
+        .timeline-item p {
+            margin: 0;
+            color: #0f0;
+        }
+
+        .skills-container {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 30px;
+            background: rgba(20, 0, 20, 0.8);
+            border: 1px solid #ff00ff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .skills-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: #0f0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .skill-category {
+            margin-bottom: 30px;
+        }
+
+        .category-title {
+            color: #00ffff;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+            padding-bottom: 5px;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-item {
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .skill-item.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            color: #0f0;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            width: 0;
+            border-radius: 4px;
+            transition: width 2s ease-in-out;
+        }
+
+        .backstory {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 30px;
+            background: rgba(20, 0, 20, 0.8);
+            border: 1px solid #ff00ff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .backstory::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+        }
+
+        .backstory-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: #0f0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .backstory-text {
+            font-size: 1.1rem;
+            color: #0f0;
+            line-height: 1.8;
+        }
+
+        .backstory-text span {
+            color: #ff00ff;
+            font-weight: bold;
+        }
+
+        .backstory-text em {
+            color: #00ffff;
+            font-style: italic;
+        }
+
+        /* Scroll Progress Indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            z-index: 9999;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 10px #ff00ff;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 30px;
+            background: rgba(20, 0, 20, 0.8);
+            border: 1px solid #ff00ff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: #0f0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid #00ffff;
+            border-radius: 0 5px 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: rgba(0, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: #ff00ff;
+            margin-right: 15px;
+            width: 30px;
+        }
+
+        .contact-text {
+            color: #0f0;
+        }
+
+        .contact-link {
+            color: #00ffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .timeline::before {
+                left: 10px;
+            }
+
+            .timeline-item::before {
+                left: -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Terminal Background -->
+    <div class="terminal-background"></div>
+
+    <!-- Matrix Rain -->
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <!-- Scan Line -->
+    <div class="scan-line"></div>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Hidden Audio Element with Autoplay -->
+    <audio id="backgroundAudio" loop autoplay>
+        <source src="https://files.catbox.moe/kxpg6s " type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Main Content -->
+    <div class="profile-card" id="home">
+        <div class="profile-image">
+            <img src="https://files.catbox.moe/tpx3f2 " alt="Kyoutaka Profile">
+        </div>
+        <div class="profile-details">
+            <h1 class="profile-name glitch" data-text="R.zox">R.zox</h1>
+            <p class="kanji-title">狂太</p>
+            <p class="alias">Alias: Kyoutaka, 010, Gehenna</p>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Nama:</span>
+                    <span class="info-value">R.zox</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Usia:</span>
+                    <span class="info-value">15 Tahun</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Status:</span>
+                    <span class="info-value">Phantom Hacker</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Afiliasi:</span>
+                    <span class="info-value">Ragnarok Cyber Company (mantan), Moga Team Community (mantan)</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Asal:</span>
+                    <span class="info-value">Shadow Realm</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Bahasa:</span>
+                    <span class="info-value">Python, C++, Assembly, JS, Golang</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Kemampuan:</span>
+                    <span class="info-value">Ethical Hacking, Exploit Dev, Reverse Engineering</span>
+                </div>
+            </div>
+            <div class="profile-bio">
+                <p>
+                    <span>R.zox</span> adalah seorang <em>cyber entity</em> yang hidup di dalam <em>digital void</em>. Ia adalah <em>phantom</em> yang tak pernah terlihat, hanya <em>kode</em> dan <em>data</em> yang ia tinggalkan.
+                </p>
+                <br>
+                <p>
+                    Dikenal juga dengan nama <span>Kyoutaka</span>, <span>010</span>, dan <span>Gehenna</span>, ia adalah mantan <em>owner</em> dari <strong>Ragnarok Cyber Company</strong> dan mantan <em>admin</em> dari <strong>Moga Team Community</strong>. Ia menghilang dari publik setelah mengungkapkan <em>backdoor</em> dalam sistem <em>global</em> yang terlalu berbahaya untuk diabaikan.
+                </p>
+                <br>
+                <p>
+                    <em>R.zox</em> tidak memiliki sekolah, tidak memiliki guru. Ia belajar dari <em>error</em>, dari <em>blue screen</em>, dari <em>firewall</em> yang ia hancurkan. Setiap <em>exploit</em> yang ia buat, setiap <em>server</em> yang ia bobol, adalah <em>lesson</em> yang ia pelajari.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="skills-container animate__animated animate__fadeIn" id="profile">
+        <h3 class="skills-title">KEAHLIAN TEKNIS</h3>
+        
+        <div class="skill-category">
+            <h4 class="category-title">Programming Languages</h4>
+            <ul class="skill-list">
+                <li class="skill-item">
+                    <div class="skill-name">
+                        <span>Python</span>
+                        <span>95%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="95%"></div>
+                    </div>
+                </li>
+                <li class="skill-item">
+                    <div class="skill-name">
+                        <span>C/C++</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="85%"></div>
+                    </div>
+                </li>
+                <li class="skill-item">
+                    <div class="skill-name">
+                        <span>Assembly</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80%"></div>
+                    </div>
+                </li>
+                <li class="skill-item">
+                    <div class="skill-name">
+                        <span>JavaScript</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="90%"></div>
+                    </div>
+                </li>
+                <li class="skill-item">
+                    <div class="skill-name">
+                        <span>GoLang</span>
+                        <span>70%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="70%"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="skill-category">
+            <h4 class="category-title">Cybersecurity</h4>
+            <ul class="skill-list">
+                <li class="skill-item">
+                    <div class="skill-name">
+                        <span>Ethical Hacking</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="90%"></div>
+                    </div>
+                </li>
+                <li class="skill-item">
+                    <div class="skill-name">
+                        <span>Penetration Testing</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="85%"></div>
+                    </div>
+                </li>
+                <li class="skill-item">
+                    <div class="skill-name">
+                        <span>Reverse Engineering</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80%"></div>
+                    </div>
+                </li>
+                <li class="skill-item">
+                    <div class="skill-name">
+                        <span>Exploit Development</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="75%"></div>
+                    </div>
+                </li>
+                <li class="skill-item">
+                    <div class="skill-name">
+                        <span>Digital Forensik</span>
+                        <span>70%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="70%"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline">
+        <h3 class="section-title glitch" data-text="TIMELINE">TIMELINE</h3>
+        <div class="timeline-item animate__animated animate__fadeInLeft">
+            <h4>2019 - Awal Muncul</h4>
+            <p>Meretas sistem sekolah lama, memulai perjalanan cyber dari bawah.</p>
+        </div>
+        <div class="timeline-item animate__animated animate__fadeInRight">
+            <h4>2020 - Moga Team Community</h4>
+            <p>Bergabung dengan Moga Team, menjadi admin dalam waktu 3 bulan.</p>
+        </div>
+        <div class="timeline-item animate__animated animate__fadeInLeft">
+            <h4>2021 - Membentuk Ragnarok</h4>
+            <p>Mendirikan Ragnarok Cyber Company, menjadi pusat peretasan elit di darknet.</p>
+        </div>
+        <div class="timeline-item animate__animated animate__fadeInRight">
+            <h4>2022 - Pengungkapan Rahasia</h4>
+            <p>Mengungkapkan kelemahan sistem keamanan global yang terlalu berbahaya untuk diabaikan.</p>
+        </div>
+        <div class="timeline-item animate__animated animate__fadeInLeft">
+            <h4>2023 - Menghilang</h4>
+            <p>Mengundurkan diri dari Ragnarok dan Moga Team, menghilang dari dunia maya.</p>
+        </div>
+        <div class="timeline-item animate__animated animate__fadeInRight">
+            <h4>2024 - Kembali</h4>
+            <p>Memulai proyek baru dengan fokus pada keamanan digital dan pendidikan hacker muda.</p>
+        </div>
+    </div>
+
+    <!-- Backstory -->
+    <div class="backstory animate__animated animate__fadeInUp">
+        <h3 class="backstory-title">BACKSTORY</h3>
+        <p class="backstory-text">
+            <span>R.zox</span> adalah <em>phantom</em> yang tidak pernah terlihat. Ia tidak memiliki identitas, hanya <em>kode</em> dan <em>malware</em> yang ia tinggalkan di belakang. Ia adalah <em>hacker</em> yang tidak pernah <em>log off</em>, <em>firewall</em> yang ia bobol, tidak pernah bisa direpair.
+        </p>
+        <br>
+        <p class="backstory-text">
+            Sebagai <span>mantan owner Ragnarok Cyber Company</span>, ia dikenal sebagai <em>cyber god</em> yang tak terkalahkan. Ia membangun tim yang mampu <em>take down</em> sistem <em>government</em> hanya dalam hitungan detik.
+        </p>
+        <br>
+        <p class="backstory-text">
+            Sebagai <span>mantan admin Moga Team Community</span>, ia membimbing banyak <em>newbie</em> menjadi <em>elite</em> dalam waktu singkat. Ia mengajarkan <em>dark code</em>, <em>exploit</em>, dan <em>malware</em> yang tak pernah terdeteksi.
+        </p>
+        <br>
+        <p class="backstory-text">
+            R.zox bukan manusia biasa. Ia adalah <em>cyber entity</em>, <em>code incarnate</em>, <em>malware</em> dengan jiwa. Ia tidak pernah mati, hanya <em>sleep</em> dalam <em>binary void</em>, menunggu saat yang tepat untuk <em>execute</em> kembali.
+        </p>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact-section" id="contact">
+        <h3 class="contact-title">CONTACT ME</h3>
+        <div class="contact-info">
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="contact-text">
+                    WhatsApp: <a href="https://wa.me/6288980963797 " target="_blank" class="contact-link">kyoutaka.html</a>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="contact-text">
+                    Email: <a href="jahraatasya@gmail.com" target="_blank" class="contact-link">jahraatasya@gmail.com</a>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fab fa-telegram"></i>
+                </div>
+                <div class="contact-text">
+                    Telegram: <a href="https://t.me/R_zox" target="_blank" class="contact-link">@R.zox</a>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fab fa-github"></i>
+                </div>
+                <div class="contact-text">
+                    GitHub: <a href="https://github.com/anatasyaaaa6456" target="_blank" class="contact-link">Kyoutaka010</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Matrix Rain
+        function createMatrixRain() {
+            const matrixRain = document.querySelector('.matrix-rain');
+            const columns = Math.floor(window.innerWidth / 20);
+
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = (i * 20) + 'px';
+                column.style.animationDelay = Math.random() * 5 + 's';
+
+                const length = Math.floor(Math.random() * 20) + 10;
+                for (let j = 0; j < length; j++) {
+                    const char = document.createElement('div');
+                    char.textContent = String.fromCharCode(Math.floor(Math.random() * 96) + 33);
+                    char.style.top = (j * 20) + 'px';
+                    char.style.opacity = Math.random() * 0.5 + 0.5;
+                    column.appendChild(char);
+                }
+
+                matrixRain.appendChild(column);
+            }
+
+            setInterval(() => {
+                const columns = document.querySelectorAll('.matrix-column');
+                columns.forEach(col => {
+                    const chars = col.children;
+                    const lastChar = chars[chars.length - 1];
+                    col.insertBefore(lastChar, col.firstChild);
+                    lastChar.textContent = String.fromCharCode(Math.floor(Math.random() * 96) + 33);
+                    lastChar.style.opacity = Math.random() * 0.5 + 0.5;
+                });
+            }, 300);
+        }
+
+        // Scroll Progress Indicator
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.querySelector('.scroll-progress');
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+
+        // Animate Skill Bars
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            skillBars.forEach(bar => {
+                const parentSection = bar.closest('.skills-container');
+                const parentRect = parentSection.getBoundingClientRect();
+
+                if (parentRect.top < window.innerHeight * 0.8 && parentRect.bottom > 0) {
+                    const width = bar.getAttribute('data-width');
+                    bar.style.width = width;
+                }
+            });
+        }
+
+        // Animate Timeline Items
+        function animateTimeline() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            timelineItems.forEach((item, index) => {
+                const rect = item.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.8 && !item.classList.contains('show')) {
+                    setTimeout(() => {
+                        item.classList.add('show');
+                    }, index * 200);
+                }
+            });
+        }
+
+        // Animate Skill Items
+        function animateSkillItems() {
+            const skillItems = document.querySelectorAll('.skill-item');
+            skillItems.forEach((item, index) => {
+                const rect = item.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.8 && !item.classList.contains('show')) {
+                    setTimeout(() => {
+                        item.classList.add('show');
+                    }, index * 100);
+                }
+            });
+        }
+
+        // Scroll Event
+        window.addEventListener('scroll', () => {
+            animateSkillBars();
+            animateTimeline();
+            animateSkillItems();
+        });
+
+        // Initialize
+        window.addEventListener('load', () => {
+            createMatrixRain();
+            animateSkillBars();
+            animateTimeline();
+            animateSkillItems();
+            
+            // Try to play audio automatically
+            const audio = document.getElementById('backgroundAudio');
+            audio.play().catch(error => {
+                console.log("Autoplay was prevented:", error);
+                // Create a small overlay to allow user to click and start audio
+                const overlay = document.createElement('div');
+                overlay.style.position = 'fixed';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                overlay.style.display = 'flex';
+                overlay.style.justifyContent = 'center';
+                overlay.style.alignItems = 'center';
+                overlay.style.zIndex = '99999';
+                overlay.style.flexDirection = 'column';
+                overlay.innerHTML = `
+                    <div style="color: #0f0; font-family: 'Orbitron', sans-serif; font-size: 2rem; margin-bottom: 20px;">AUDIO PAUSED</div>
+                    <div style="color: #0f0; margin-bottom: 30px; text-align: center;">Click anywhere to enable background sound</div>
+                `;
+                document.body.appendChild(overlay);
+                
+                overlay.addEventListener('click', function() {
+                    audio.play();
+                    document.body.removeChild(overlay);
+                });
+            });
+        });
+
+        // Cursor
+        const cursor = document.getElementById('cursor');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        const hoverElements = document.querySelectorAll('.info-item, .timeline-item, .category-title, .contact-item');
+        hoverElements.forEach(elem => {
+            elem.addEventListener('mouseenter', () => {
+                cursor.classList.add('hack');
+            });
+            elem.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hack');
+            });
+        });
+
+        // Glitch Effect
+        function applyGlitchEffect() {
+            const glitchElements = document.querySelectorAll('.glitch');
+            glitchElements.forEach(el => {
+                const text = el.textContent;
+                el.setAttribute('data-text', text);
+            });
+        }
+
+        window.addEventListener('load', applyGlitchEffect);
+
+        // Random Glitch Trigger
+        setInterval(() => {
+            const h1 = document.querySelector('h1');
+            if (h1) {
+                h1.classList.add('glitch');
+                setTimeout(() => {
+                    h1.classList.remove('glitch');
+                }, 300);
+            }
+        }, 4000);
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSkillBars();
+                    animateTimeline();
+                    animateSkillItems();
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections
+        const sections = document.querySelectorAll('.skills-container, .timeline, .backstory, .contact-section');
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
